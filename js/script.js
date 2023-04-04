@@ -1,6 +1,7 @@
 // JS로 HTML, CSS 제어
 const messageContainer = document.querySelector("#d-day-message");
 const container = document.querySelector("#d-day-container");
+const intervalIdArr = [];
 
 container.style.display = "none";
 messageContainer.innerHTML = "<h3>D-Day를 입력해 주세요.</h3>";
@@ -25,14 +26,15 @@ const counterMaker = function () {
     container.style.display = "none";
     messageContainer.innerHTML = "<h3>타이머가 종료 되었습니다.</h3>";
     messageContainer.style.display = "flex";
+    setClearInterval();
     return;
   } else if (isNaN(remaining)) {
     container.style.display = "none";
     messageContainer.innerHTML = "<h3>유효한 시간대가 아닙니다.</h3>";
     messageContainer.style.display = "flex";
+    setClearInterval();
     return;
   }
-  console.log("함수 종료 안됨");
 
   const remainingObj = {
     remainingDate: Math.floor(remaining / 3600 / 24),
@@ -50,24 +52,22 @@ const counterMaker = function () {
     document.getElementById(tag).textContent = remainingObj[timeKeys[i]];
     i++;
   }
-
-  // const documentObj = {
-  //   days: document.getElementById("days"),
-  //   hours: document.getElementById("hours"),
-  //   min: document.getElementById("min"),
-  //   sec: document.getElementById("sec"),
-  // };
-
-  // // for in문
-  // let i = 0;
-  // for (let key in documentObj) {
-  //   documentObj[key].textContent = remainingObj[timeKeys[i]];
-  //   i++;
-  // }
 };
 
 const starter = function () {
   container.style.display = "flex";
   messageContainer.style.display = "none";
   counterMaker();
+  const intervalId = setInterval(counterMaker, 1000);
+  intervalIdArr.push(intervalId);
+  console.log(intervalIdArr);
+};
+
+const setClearInterval = function () {
+  container.style.display = "none";
+  messageContainer.style.display = "flex";
+  messageContainer.innerHTML = "<h3>D-Day를 입력해 주세요.</h3>";
+  for (let i = 0; i < intervalIdArr.length; i++) {
+    clearInterval(intervalIdArr[i]);
+  }
 };
