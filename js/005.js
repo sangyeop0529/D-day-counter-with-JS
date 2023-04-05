@@ -44,7 +44,7 @@ const counterMaker = function () {
   const documentArr = ["days", "hours", "min", "sec"];
   const timeKeys = Object.keys(remainingObj);
 
-  // for of 문
+  // for of 문 (배열)
   let i = 0;
   for (let tag of documentArr) {
     document.getElementById(tag).textContent = remainingObj[timeKeys[i]];
